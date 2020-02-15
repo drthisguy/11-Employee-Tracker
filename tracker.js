@@ -1,7 +1,8 @@
 const mysql = require('mysql'),
-    inquirer = require('inquirer');
-
-const connection = mysql.createConnection({
+    Prompt = require('./lib/Prompts');
+    
+const prompt = new Prompt,
+ connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
     password:"taytum123",
