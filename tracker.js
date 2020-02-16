@@ -38,3 +38,35 @@ function viewDepartments() {
     console.table(res);
  });
 }
+
+function addEmployee(answers) {
+  connection.query("INSERT INTO employees SET ?", 
+    {
+        first_name: answers.first,
+        last_name: answers.last,
+        role_id: answers.role,
+        manager_id: answers.manager
+    },
+    err => { if (err) throw err;
+    console.log(`New employee ${answers.first} ${answers.last} added sucessfully!`);})
+ }
+
+function creatDept(answer) {
+  connection.query("INSERT INTO departments SET ?", 
+    {
+        name: answer
+    },
+    err => { if (err) throw err;
+    console.log(`New department ${answer} created sucessfully!`);})
+ }
+
+function creatRole(answers) {
+  connection.query("INSERT INTO departments SET ?", 
+    {
+        title: answers.title,
+        salary: answers.salary,
+        dapartment_id: answers.dept
+    },
+    err => { if (err) throw err;
+    console.log(`New rolee ${answers.title} created sucessfully!`);})
+ }
