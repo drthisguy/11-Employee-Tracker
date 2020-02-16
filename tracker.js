@@ -14,7 +14,7 @@ const Prompt = require('./lib/Prompts'),
 connection.connect( err => {
     if (err) throw err;
 });
-
+start();
 function start() {
 prompt.start().then(({ catagory }) => {
 
@@ -51,7 +51,9 @@ function employeeManager() {
                 break;
 
             case 'Add a new employee':
-                viewEmployees();
+                prompt.newEmployee().then( answers => {
+                    addEmployee(answers);
+                }).catch( err => console.log(err));
                 break;
 
             case 'Find employees by their manager':
@@ -68,7 +70,7 @@ function employeeManager() {
             default:
               start();
         }
-    })
+    }).catch( err => console.log(err));
  }
 
 function viewDepartments() {
@@ -105,9 +107,9 @@ function addEmployee(answers) {
         role_id: answers.role,
         manager_id: answers.manager
     },
-    err => { if (err) throw err;
-    console.log(`New employee ${answers.first} ${answers.last} added sucessfully!`);})
- }
+    err => {if (err) throw err})
+    console.log(`New employee ${answers.first} ${answers.last} added sucessfully!`);
+}
 
 function creatDept(answer) {
   connection.query("INSERT INTO departments SET ?", 
@@ -135,7 +137,8 @@ function updateRole(title) {
         title: title
     },
     err => { if (err) throw err;
-    console.log(`New role ${title} changed sucessfully!`);})
- }
+    console.log(`New role ${title} changed sucessfully!`);
+  })
+}
 
  
