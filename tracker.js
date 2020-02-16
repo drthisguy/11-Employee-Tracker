@@ -15,7 +15,61 @@ connection.connect( err => {
     if (err) throw err;
 });
 
-prompt.start();
+function start() {
+prompt.start().then(({ catagory }) => {
+
+    switch (catagory) {
+        case 'Employees':
+            employeeManager();
+            break;
+
+        case 'Departments':
+            deptsManager();
+            break;
+
+        case 'Job Titles':
+            roleManager();
+            break;
+        default:
+           console.log('Have a great day!');
+           process.exit([0]);
+    }
+}).catch( err => console.log(err));
+}
+
+function employeeManager() {
+    
+    prompt.employeeOpts().then( ({ option }) => {
+      
+        switch (option) {
+            case 'View all employees':
+                viewEmployees();
+                break;
+
+            case 'Update an employee':
+                viewEmployees();
+                break;
+
+            case 'Add a new employee':
+                viewEmployees();
+                break;
+
+            case 'Find employees by their manager':
+                viewEmployees();
+                break;
+
+            case 'Look up employee by name':
+                viewEmployees();
+                break;
+
+            case 'Look up employee by ID':
+                viewEmployees();
+                break;
+            default:
+              start();
+        }
+    })
+ }
 
 function viewDepartments() {
     connection.query("SELECT * FROM departments", (err, res) => {
@@ -29,7 +83,9 @@ function viewDepartments() {
     connection.query("SELECT * FROM employees", (err, res) => {
     if (err) throw err;
 
+    console.log('\n');
     console.table(res);
+    employeeManager();
  });
 }
 
