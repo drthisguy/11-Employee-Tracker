@@ -1,8 +1,8 @@
-const mysql = require('mysql'),
-    Prompt = require('./lib/Prompts'),
-    cTable = require('console.table');
-    
-const prompt = new Prompt,
+const Prompt = require('./lib/Prompts'), 
+    mysql = require('mysql'),
+    cTable = require('console.table'),
+
+ prompt = new Prompt,
  connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
@@ -14,6 +14,8 @@ const prompt = new Prompt,
 connection.connect( err => {
     if (err) throw err;
 });
+
+prompt.start();
 
 function viewDepartments() {
     connection.query("SELECT * FROM departments", (err, res) => {
