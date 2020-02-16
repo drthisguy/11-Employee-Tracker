@@ -9,7 +9,7 @@ const prompt = new Prompt,
     user: "root",
     password:"YourRootPassword",
     database: "tracker_DB"
-});
+}); 
 
 connection.connect( err => {
     if (err) throw err;
@@ -68,5 +68,16 @@ function creatRole(answers) {
         dapartment_id: answers.dept
     },
     err => { if (err) throw err;
-    console.log(`New rolee ${answers.title} created sucessfully!`);})
+    console.log(`New role ${answers.title} created sucessfully!`);})
  }
+
+function updateRole(title) {
+  connection.query("UPDATE employees SET ?", 
+    {
+        title: title
+    },
+    err => { if (err) throw err;
+    console.log(`New role ${title} changed sucessfully!`);})
+ }
+
+ 
