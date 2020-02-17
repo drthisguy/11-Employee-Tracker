@@ -65,7 +65,9 @@ function employeeManager() {
                 break;
 
             case 'Look up employee by ID':
-                viewEmployees();
+                prompt.getId().then(({ id }) => {
+                    findEmployeeById(id);
+                }).catch( err => console.log(err));
                 break;
             default:
               start();
@@ -91,6 +93,20 @@ function viewDepartments() {
  });
 }
 
+ function findEmployeeById(id) {
+    connection.query("SELECT * FROM employees WHERE ?",
+    {
+        id: id
+    },
+    (err, res) => {
+    if (err) {console.log(err);}
+
+    console.log('\n');
+    console.table(res);
+    employeeManager();
+ });
+}
+
  function viewRoles() {
     connection.query("SELECT * FROM roles", (err, res) => {
     if (err) throw err;
@@ -99,16 +115,17 @@ function viewDepartments() {
  });
 }
 
-function addEmployee(answers) {
+function addEmployee(employee) {
   connection.query("INSERT INTO employees SET ?", 
     {
-        first_name: answers.first,
-        last_name: answers.last,
-        role_id: answers.role,
-        manager_id: answers.manager
+        first_name: employee.first,
+        last_name: employee.last,
+        role_id: employee.role,
+        manager_id: employee.manager
     },
     err => {if (err) throw err})
-    console.log(`New employee ${answers.first} ${answers.last} added sucessfully!`);
+    console.log(`New employee ${employee.first} ${employee.last} added sucessfully!`);
+    employeeManager();
 }
 
 function creatDept(answer) {
@@ -117,10 +134,11 @@ function creatDept(answer) {
         name: answer
     },
     err => { if (err) throw err;
-    console.log(`New department ${answer} created sucessfully!`);})
+    console.log(`New department ${answer} created sucessfully!`);
+  })
  }
 
-function creatRole(answers) {
+function creatNewRole(answers) {
   connection.query("INSERT INTO departments SET ?", 
     {
         title: answers.title,
@@ -128,16 +146,21 @@ function creatRole(answers) {
         dapartment_id: answers.dept
     },
     err => { if (err) throw err;
-    console.log(`New role ${answers.title} created sucessfully!`);})
+    console.log(`New role ${answers.title} created sucessfully!`);
+  })
  }
 
-function updateRole(title) {
+function updateEmployee(employee) {
   connection.query("UPDATE employees SET ?", 
-    {
-        title: title
-    },
+  {
+    first_name: employee.first,
+    last_name: employee.last,
+    role_id: employee.role,
+    manager_id: employee.manager
+  },
+    `WHERE ID = ${employee.id}`,
     err => { if (err) throw err;
-    console.log(`New role ${title} changed sucessfully!`);
+    console.log(`Employee: ${employee.first} ${employee.last} has been updated sucessfully!`);
   })
 }
 
