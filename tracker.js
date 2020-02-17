@@ -61,7 +61,9 @@ function employeeManager() {
                 break;
 
             case 'Look up employee by name':
-                viewEmployees();
+                prompt.getName().then(({ name }) => {
+                    findEmployeeByName(name);
+                }).catch( err => console.log(err));
                 break;
 
             case 'Look up employee by ID':
@@ -95,16 +97,34 @@ function viewDepartments() {
 
  function findEmployeeById(id) {
     connection.query("SELECT * FROM employees WHERE ?",
-    {
-        id: id
-    },
+    { id: id },
     (err, res) => {
     if (err) {console.log(err);}
 
+    if (res.length == 0) {
+      console.log('\nEmployee not found\n');
+      employeeManager();
+    } else {
     console.log('\n');
     console.table(res);
     employeeManager();
- });
+  }});
+}
+
+ function findEmployeeByName(name) {
+    connection.query(`SELECT * FROM employees WHERE ?`,
+    { last_name: name },
+    (err, res) => {
+    if (err) {console.log(err);}
+    
+    if (res.length == 0) {
+      console.log('\nEmployee not found\n');
+      employeeManager();
+    } else {
+    console.log('\n');
+    console.table(res);
+    employeeManager();
+  }});
 }
 
  function viewRoles() {
