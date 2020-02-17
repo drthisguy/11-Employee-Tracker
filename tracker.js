@@ -10,12 +10,14 @@ const Prompt = require('./lib/Prompts'),
     password:"YourRootPassword",
     database: "tracker_DB"
 }); 
-
+console.log('test');
 connection.connect( err => {
-    if (err) throw err;
+    if (err) {console.log(err);}
+    
+    console.log('Connected to the MySQL server.');
 });
-start();
-function start() {
+
+(start = () => {
 prompt.start().then(({ catagory }) => {
 
     switch (catagory) {
@@ -35,10 +37,9 @@ prompt.start().then(({ catagory }) => {
            process.exit([0]);
     }
 }).catch( err => console.log(err));
-}
+})();
 
  function employeeManager() {
-    
     prompt.employeeOpts().then(async ({ option }) => {
       
         switch (option) {
@@ -51,7 +52,8 @@ prompt.start().then(({ catagory }) => {
                 let employee = await findEmployeeById(id, option);
                 prompt.update().then(async ({ edit }) => {
                     await employeeEditor(employee, edit).then( employee => {
-                        updateEmployee(employee);
+                        console.table(employee);
+                        employeeManager();
                     }
                 )}).catch( err => console.log(err));
                 break;
@@ -110,12 +112,12 @@ function viewDepartments() {
         (err, res) => {
         if (err) {console.log(err);}
         if (res.length == 0) {
-        console.log(reject(Error('\nEmployee not found\n')));
+        console.log('\nEmployee not found\n');
         employeeManager();
 
         } else if(args.length > 1) {
             console.log(res);
-            resolve(res);
+            resolve(res[0]);
         } else {
         console.log('\n');
         console.table(res);
@@ -186,20 +188,18 @@ function creatNewRole(answers) {
   })
  }
 
-function updateEmployee(employee) {
-    let strng = 'first_name',
-        name = 'tami';
+function updateFirstName(update) {
   connection.query(`UPDATE employees SET ? WHERE ?`,
   [
     {
-      strng: employee
+      first_name: update.first_name
     },
     {
-      id: 11
+      id: update.id
     }
-  ],
+   ],
     err => { if (err) throw err
-    // console.log(`Employee: ${employee.first} ${employee.last} has been updated sucessfully!`);
+    console.log(`Employee: ${update.first_name} ${update.last_name} has been updated sucessfully!`);
     })
 }
 
@@ -210,8 +210,9 @@ function employeeEditor(employee, editType) {
         switch (editType) {
             case 'First Name':
                 prompt.getNewFirst().then( ({ name }) => {
-                    employee[0].first_name = name;
-                    resolve(employee[0]);
+                    employee.first_name = name;
+                    updateFirstName(employee);
+                    resolve(employee);
                 }).catch(err => {if (err) throw err});
                 break;
             case 'Last Name':
@@ -238,6 +239,3 @@ function employeeEditor(employee, editType) {
      }  catch(err) {reject(console.log("Something strange went down!"))};
     })
 }
-
-
- 
