@@ -37,9 +37,9 @@ prompt.start().then(({ catagory }) => {
 }).catch( err => console.log(err));
 }
 
-function employeeManager() {
+ function employeeManager() {
     
-    prompt.employeeOpts().then( ({ option }) => {
+    prompt.employeeOpts().then(async ({ option }) => {
       
         switch (option) {
             case 'View all employees':
@@ -47,7 +47,13 @@ function employeeManager() {
                 break;
 
             case 'Update an employee':
-                viewEmployees();
+                const { id } = await prompt.getId();
+                let employee = await findEmployeeById(id, option);
+                prompt.update().then(async ({ edit }) => {
+                    await employeeEditor(employee, edit).then( employee => {
+                        updateEmployee(employee);
+                    }
+                )}).catch( err => console.log(err));
                 break;
 
             case 'Add a new employee':
@@ -95,20 +101,30 @@ function viewDepartments() {
  });
 }
 
- function findEmployeeById(id) {
-    connection.query("SELECT * FROM employees WHERE ?",
-    { id: id },
-    (err, res) => {
-    if (err) {console.log(err);}
+ function findEmployeeById(id, ...args) {
+    return new Promise((resolve, reject) => {
 
-    if (res.length == 0) {
-      console.log('\nEmployee not found\n');
-      employeeManager();
-    } else {
-    console.log('\n');
-    console.table(res);
-    employeeManager();
+        let args = Array.from(arguments);
+        connection.query("SELECT * FROM employees WHERE ?",
+        { id: id },
+        (err, res) => {
+        if (err) {console.log(err);}
+        if (res.length == 0) {
+        console.log(reject(Error('\nEmployee not found\n')));
+        employeeManager();
+
+        } else if(args.length > 1) {
+            console.log(res);
+            resolve(res);
+        } else {
+        console.log('\n');
+        console.table(res);
+        employeeManager();
   }});
+     
+   
+     }
+    )
 }
 
  function findEmployeeByName(name) {
@@ -171,17 +187,57 @@ function creatNewRole(answers) {
  }
 
 function updateEmployee(employee) {
-  connection.query("UPDATE employees SET ?", 
-  {
-    first_name: employee.first,
-    last_name: employee.last,
-    role_id: employee.role,
-    manager_id: employee.manager
-  },
-    `WHERE ID = ${employee.id}`,
-    err => { if (err) throw err;
-    console.log(`Employee: ${employee.first} ${employee.last} has been updated sucessfully!`);
-  })
+    let strng = 'first_name',
+        name = 'tami';
+  connection.query(`UPDATE employees SET ? WHERE ?`,
+  [
+    {
+      strng: employee
+    },
+    {
+      id: 11
+    }
+  ],
+    err => { if (err) throw err
+    // console.log(`Employee: ${employee.first} ${employee.last} has been updated sucessfully!`);
+    })
 }
+
+function employeeEditor(employee, editType) {
+   return new Promise((resolve, reject) => {
+    
+    try { 
+        switch (editType) {
+            case 'First Name':
+                prompt.getNewFirst().then( ({ name }) => {
+                    employee[0].first_name = name;
+                    resolve(employee[0]);
+                }).catch(err => {if (err) throw err});
+                break;
+            case 'Last Name':
+                prompt.getNewLast().then( ({ name }) => {
+                    employee.last_name = name;
+                }).catch(err => {if (err) throw err});
+                resolve(employee);
+                return employee;
+            case 'Role':
+                prompt.getNewRole().then( ({ role }) => {
+                    employee.role_id = role;
+                }).catch(err => {if (err) throw err});
+                resolve(employee);
+                return employee;
+            case 'Manager':
+                prompt.getNewManager().then( ({ manager }) => {
+                    employee.manager_id = manager;
+                }).catch(err => {if (err) throw err});
+                resolve(employee);
+                return employee;
+            default:
+              employeeOpts();
+        }
+     }  catch(err) {reject(console.log("Something strange went down!"))};
+    })
+}
+
 
  
