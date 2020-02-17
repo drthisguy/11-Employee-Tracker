@@ -14,7 +14,7 @@ console.log('test');
 connection.connect( err => {
     if (err) {console.log(err);}
     
-    console.log('Connected to the MySQL server.');
+    console.log('\nConnected to the MySQL server.');
 });
 
 (start = () => {
@@ -50,10 +50,10 @@ prompt.start().then(({ catagory }) => {
             case 'Update an employee':
                 const { id } = await prompt.getId();
                 let employee = await findEmployeeById(id, option);
-                prompt.update().then(async ({ edit }) => {
-                    await employeeEditor(employee, edit).then( employee => {
-                        console.table(employee);
-                        employeeManager();
+                prompt.update().then(({ edit }) => {
+                    employeeEditor(employee, edit).then( employee => {
+                    console.table(employee);
+                    employeeManager();
                     }
                 )}).catch( err => console.log(err));
                 break;
@@ -190,17 +190,21 @@ function creatNewRole(answers) {
 
 function updateFirstName(update) {
   connection.query(`UPDATE employees SET ? WHERE ?`,
-  [
-    {
-      first_name: update.first_name
-    },
-    {
-      id: update.id
-    }
-   ],
-    err => { if (err) throw err
-    console.log(`Employee: ${update.first_name} ${update.last_name} has been updated sucessfully!`);
-    })
+
+  [{ first_name: update.first_name }, { id: update.id }],
+
+    err => { if (err) throw err })
+    console.log(`\nEmployee: ${update.first_name} ${update.last_name} has been updated sucessfully!`);
+  
+}
+
+function updateLastName(update) {
+  connection.query(`UPDATE employees SET ? WHERE ?`,
+
+  [{ last_name: update.last_name }, { id: update.id }],
+  
+    err => { if (err) throw err})
+    console.log(`\nEmployee: ${update.first_name} ${update.last_name} has been updated sucessfully!`);
 }
 
 function employeeEditor(employee, editType) {
@@ -215,18 +219,22 @@ function employeeEditor(employee, editType) {
                     resolve(employee);
                 }).catch(err => {if (err) throw err});
                 break;
+
             case 'Last Name':
                 prompt.getNewLast().then( ({ name }) => {
                     employee.last_name = name;
+                    updateLastName(employee);
+                    resolve(employee);
                 }).catch(err => {if (err) throw err});
-                resolve(employee);
-                return employee;
+                break;
+
             case 'Role':
                 prompt.getNewRole().then( ({ role }) => {
                     employee.role_id = role;
                 }).catch(err => {if (err) throw err});
                 resolve(employee);
                 return employee;
+
             case 'Manager':
                 prompt.getNewManager().then( ({ manager }) => {
                     employee.manager_id = manager;
