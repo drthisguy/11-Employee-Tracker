@@ -63,9 +63,9 @@ ui.employeeOpts().then(async ({ option }) => {
 
         case 'Look up employee by name':
             ui.getName().then(async ({ name }) => {
-                await sql.lookUpByName(name)
-                .then(  res => {console.log(res);
-                employeeManager()})
+                await sql.lookUpByName(name);
+                employeeManager();
+                
             }).catch( err => console.log(err));
             break;
 
@@ -137,7 +137,7 @@ function findEmployeeById(id, ...args) {
             resolve(res[0]);
 
         } else {
-        console.log(`\n${console.table(res)}`);
+        console.log(`\n${console.table(`Employee with ID: ${id}`, res)}`);
         employeeManager();
         }
  });
