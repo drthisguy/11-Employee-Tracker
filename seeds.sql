@@ -11,5 +11,5 @@ INSERT INTO managers (name, dept_id, role_id)
 VALUES ('Ernie', 1, 2), ('Jessica', 2, 2),  ('Carrie', 3, 2), ('Bart', 4, 2), ('Jared', 5, 2), ('Noah', 6, 2), ('Samantha', 7, 2), ('Elizabeth', 8, 2);
 
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
-VALUES ('John', 'Doe', 1, NULL), ('Jeff', 'Bezos', 16, 2), ('Trisia', 'Harper', 3, 1), ('Penny', 'Warren', 9, 8), ('Keith', 'Brock', 6, 1), ('Alexis', 'Walters', 5, 1), ('Stella', 'Reid', 11, 4), ('David', 'Sommers', 7, 6), ('Ginger', 'Ortiz', 12, 4), ('Madeline', 'Green', 15, 2), ('Julio', 'Carlson', 4, 1), ('Ada', 'Flowers', 13, 4), ('Jane', 'Doe', 10, 8), ('Allison', 'Lopez', 8, 4), ('Howard', 'Burke',  14, 3), ('Doctor', 'Who', 14, 3);
+VALUES ('John', 'Doe', 1, 1), ('Jeff', 'Bezos', 16, 2), ('Trisia', 'Harper', 3, 1), ('Penny', 'Warren', 9, 8), ('Keith', 'Brock', 6, 1), ('Alexis', 'Walters', 5, 1), ('Stella', 'Reid', 11, 4), ('David', 'Sommers', 7, 6), ('Ginger', 'Ortiz', 12, 4), ('Madeline', 'Green', 15, 2), ('Julio', 'Carlson', 4, 1), ('Ada', 'Flowers', 13, 4), ('Jane', 'Doe', 10, 8), ('Allison', 'Lopez', 8, 4), ('Howard', 'Burke',  14, 3), ('Doctor', 'Who', 14, 3);
 
