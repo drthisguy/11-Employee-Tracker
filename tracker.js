@@ -1,8 +1,8 @@
         const UI = require('./lib/Prompts'),
          SQL = require('./lib/sql'),
-         cTable = require('console.table');
+         cTable = require('console.table'),
 
-ui = new UI;
+  ui = new UI,
   sql = new SQL;
 
 start();
@@ -35,19 +35,19 @@ ui.employeeOpts().then(async ({ option }) => {
     switch (option) {
         case 'View all employees':
             console.clear();
-            await sql.viewEmployees();
+            sql.viewEmployees();
             employeeManager();
             break;
 
         case 'Update an employee':
             const { id } = await ui.getId();
-            let employee = await findEmployeeById(id, option);
+            let employee = await findEmployeeById(id, 'arg');
             ui.update().then(({ edit }) => {
                 employeeEditor(employee, edit)
                 .then( employee => {
                 console.table(employee);
                 employeeManager();
-                }
+             }
             )}).catch( err => console.log(err));
             break;
 
@@ -77,6 +77,7 @@ ui.employeeOpts().then(async ({ option }) => {
         case 'Look up employee by ID':
             ui.getId().then(({ id }) => {
                 findEmployeeById(id);
+
             }).catch( err => console.log(err));
             break;
 
@@ -85,21 +86,24 @@ ui.employeeOpts().then(async ({ option }) => {
                 findEmployeeById(id, 'arg')
                 .then((employee) => {
                 ui.confirm(employee).then(({ confirm }) => {
-                confirm ? sql.terminate(employee) : employeeManager();
+                if(confirm) {
+                    sql.terminate(employee);
+                    employeeManager();    
+                }else {
+                    employeeManager();
+                }
                 })})
-                employeeManager();
             }).catch( err => console.log(err));
             break;
         default:
             start();
     }
-}).catch( err => console.log(err));
+  }).catch( err => console.log(err));
 }
-
 
 function employeeEditor(employee, editType) {
 return new Promise((resolve, reject) => {
-console.clear();
+
 try { 
     switch (editType) {
         case 'First Name':
@@ -136,23 +140,25 @@ try {
             employeeOpts();
     }
     }  catch(err) {reject(console.log((err)))};
-})
+ })
 }
 
 function findEmployeeById(id, ...args) {
     return new Promise(async resolve => {
 
         const args = Array.from(arguments),
-            res = await sql.lookUpByID(id)
+            res = await sql.lookUpByID(id);
+
         if (!res) {
             console.log('\nEmployee not found\n');
             employeeManager();
 
         } else if(args.length > 1) {
-            const [ send ] = res;
+            const [ employee ] = res;
+            console.clear();
             console.log('\n');
             console.log(`${console.table(`You have selected:`, res)}`);
-            resolve(send);
+            resolve(employee);
 
         } else {
             console.log('\n');
