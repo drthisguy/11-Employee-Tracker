@@ -83,7 +83,7 @@ ui.employeeOpts().then(async ({ option }) => {
 
 function employeeEditor(employee, editType) {
 return new Promise((resolve, reject) => {
-
+console.clear();
 try { 
     switch (editType) {
         case 'First Name':
