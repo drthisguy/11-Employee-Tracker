@@ -16,7 +16,7 @@
             break;
 
         case 'Departments':
-            dept.deptManager();
+            dept.manager();
             break;
 
         case 'Job Titles':
