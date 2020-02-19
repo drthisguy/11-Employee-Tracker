@@ -85,19 +85,18 @@ ui.employeeOpts().then(async ({ option }) => {
             break;
 
         case 'Terminate an employee':
-            ui.getId().then(({ id }) => {
-                findEmployeeById(id, 'arg')
-                .then((employee) => {
+            ui.getId().then(async ({ id }) => {
+                const employee = await findEmployeeById(id, 'arg')
                 ui.confirm(employee).then(({ confirm }) => {
-                if(confirm) {
-                    sql.terminate(employee);
-                    employeeManager();    
-                } else {
-                    employeeManager();
-                }
-                })})
-            }).catch( err => console.log(err));
-            break;
+                    if(confirm) {
+                        sql.terminate(employee);
+                        employeeManager();    
+                    } else {
+                        employeeManager();
+                    }
+                    }).catch( err => console.log(err));
+                 })
+             break;
         default:
             //returns to the home screen
             start();
