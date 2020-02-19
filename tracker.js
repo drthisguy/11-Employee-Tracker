@@ -125,6 +125,14 @@ return new Promise((resolve, reject) => {
             }).catch(err => {if (err) throw err});
             break;
 
+        case 'Department':
+            ui.getNewDeptId().then( ({ dept }) => {
+                employee.dept_id = dept;
+                sql.setNewDept(employee);
+                resolve(employee);
+            }).catch(err => {if (err) throw err});
+            break;
+
         case 'Role':
             ui.getNewRole().then( ({ role }) => {
                 employee.role_id = role;
