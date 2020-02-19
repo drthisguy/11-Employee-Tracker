@@ -43,7 +43,8 @@ ui.employeeOpts().then(async ({ option }) => {
             const { id } = await ui.getId();
             let employee = await findEmployeeById(id, option);
             ui.update().then(({ edit }) => { console.log(edit);
-                employeeEditor(employee, edit).then( employee => {
+                employeeEditor(employee, edit)
+                .then( employee => {
                 console.table(employee);
                 employeeManager();
                 }
@@ -58,7 +59,11 @@ ui.employeeOpts().then(async ({ option }) => {
             break;
 
         case 'Find employees by their manager':
-            viewEmployees();
+            ui.getManager().then(async ({ id }) => {
+                await sql.lookUpByManager(id);
+                employeeManager();
+                
+            }).catch( err => console.log(err));
             break;
 
         case 'Look up employee by name':
@@ -134,12 +139,14 @@ function findEmployeeById(id, ...args) {
             employeeManager();
 
         } else if(args.length > 1) {
-
-            resolve(res[0]);
+            console.log('\n');
+            console.log(`${console.table(`You have selected:`, res)}`);
+            resolve([{res}]);
 
         } else {
-        console.log(`\n${console.table(`Employee with ID: ${id}`, res)}`);
-        employeeManager();
+            console.log('\n');
+            console.log(`${console.table(`Employee with ID: ${id}`, res)}`);
+            employeeManager();
         }
  });
 }
