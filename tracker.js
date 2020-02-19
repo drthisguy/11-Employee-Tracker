@@ -5,8 +5,7 @@
   ui = new UI,
   sql = new SQL;
 
-start();
-function start() { 
+(function start() { 
     ui.start().then(({ catagory }) => {
 
     switch (catagory) {
@@ -22,11 +21,12 @@ function start() {
             roleManager();
             break;
         default:
+        sql.end();
         console.log('Have a great day!');
         process.exit([0]);
     }
 }).catch( err => console.log(err));
-}
+})();
 
 function employeeManager() {
 
@@ -89,7 +89,7 @@ ui.employeeOpts().then(async ({ option }) => {
                 if(confirm) {
                     sql.terminate(employee);
                     employeeManager();    
-                }else {
+                } else {
                     employeeManager();
                 }
                 })})
@@ -104,7 +104,7 @@ ui.employeeOpts().then(async ({ option }) => {
 function employeeEditor(employee, editType) {
 return new Promise((resolve, reject) => {
 
-try { 
+   try { 
     switch (editType) {
         case 'First Name':
             ui.getNewFirst().then( ({ name }) => {
@@ -153,7 +153,7 @@ function findEmployeeById(id, ...args) {
             console.log('\nEmployee not found\n');
             employeeManager();
 
-        } else if(args.length > 1) {
+        } else if (args.length > 1) {
             const [ employee ] = res;
             console.clear();
             console.log('\n');
