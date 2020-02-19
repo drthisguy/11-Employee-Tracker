@@ -42,7 +42,7 @@ ui.employeeOpts().then(async ({ option }) => {
         case 'Update an employee':
             const { id } = await ui.getId();
             let employee = await findEmployeeById(id, option);
-            ui.update().then(({ edit }) => {
+            ui.update().then(({ edit }) => { console.log(edit);
                 employeeEditor(employee, edit).then( employee => {
                 console.table(employee);
                 employeeManager();
@@ -105,9 +105,10 @@ try {
         case 'Role':
             ui.getNewRole().then( ({ role }) => {
                 employee.role_id = role;
+                sql.setNewRole(employee);
+                resolve(employee);
             }).catch(err => {if (err) throw err});
-            resolve(employee);
-            return employee;
+            break;
 
         case 'Manager':
             ui.getNewManager().then( ({ manager }) => {
@@ -118,7 +119,7 @@ try {
         default:
             employeeOpts();
     }
-    }  catch(err) {reject(console.log("Something weird went down!"))};
+    }  catch(err) {reject(console.log((err)))};
 })
 }
 
