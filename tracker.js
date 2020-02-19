@@ -1,8 +1,10 @@
         const UI = require('./lib/Prompts'),
          SQL = require('./lib/sql'),
+         Dept = require('./lib/depts'),
          cTable = require('console.table'),
 
   ui = new UI,
+  dept = new Dept,
   sql = new SQL;
 
 (function start() { 
@@ -14,13 +16,14 @@
             break;
 
         case 'Departments':
-            deptsManager();
+            dept.deptManager();
             break;
 
         case 'Job Titles':
             roleManager();
             break;
         default:
+        // Quit program
         sql.end();
         console.log('Have a great day!');
         process.exit([0]);
@@ -96,6 +99,7 @@ ui.employeeOpts().then(async ({ option }) => {
             }).catch( err => console.log(err));
             break;
         default:
+            //returns to the home screen
             start();
     }
   }).catch( err => console.log(err));
