@@ -42,7 +42,7 @@ ui.employeeOpts().then(async ({ option }) => {
         case 'Update an employee':
             const { id } = await ui.getId();
             let employee = await findEmployeeById(id, option);
-            ui.update().then(({ edit }) => { console.log(edit);
+            ui.update().then(({ edit }) => {
                 employeeEditor(employee, edit)
                 .then( employee => {
                 console.table(employee);
@@ -77,6 +77,17 @@ ui.employeeOpts().then(async ({ option }) => {
         case 'Look up employee by ID':
             ui.getId().then(({ id }) => {
                 findEmployeeById(id);
+            }).catch( err => console.log(err));
+            break;
+
+        case 'Terminate an employee':
+            ui.getId().then(({ id }) => {
+                findEmployeeById(id, 'arg')
+                .then((employee) => {
+                ui.confirm(employee).then(({ confirm }) => {
+                confirm ? sql.terminate(employee) : employeeManager();
+                })})
+                employeeManager();
             }).catch( err => console.log(err));
             break;
         default:
@@ -133,15 +144,15 @@ function findEmployeeById(id, ...args) {
 
         const args = Array.from(arguments),
             res = await sql.lookUpByID(id)
-
         if (!res) {
             console.log('\nEmployee not found\n');
             employeeManager();
 
         } else if(args.length > 1) {
+            const [ send ] = res;
             console.log('\n');
             console.log(`${console.table(`You have selected:`, res)}`);
-            resolve([{res}]);
+            resolve(send);
 
         } else {
             console.log('\n');
