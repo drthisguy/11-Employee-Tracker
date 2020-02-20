@@ -5,17 +5,19 @@ CREATE DATABASE tracker_DB;
 USE tracker_DB; 
 
 
-CREATE TABLE roles (
+CREATE TABLE departments (
     id INT NOT NULL AUTO_INCREMENT,
-    title VARCHAR(50) NOT NULL,
-    salary DECIMAL (10,2) NULL,
+    name VARCHAR(50) NOT NULL,
     PRIMARY KEY (id)
 );
 
-CREATE TABLE departments (
+CREATE TABLE roles (
     id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(30) NOT NULL,
-    PRIMARY KEY (id)
+    title VARCHAR(50) NOT NULL,
+	dept_id INT,
+    salary DECIMAL (10,2) NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (dept_id) REFERENCES departments(id)
 );
 
 CREATE TABLE managers (

@@ -1,11 +1,11 @@
 /*Seeds for MySQL tables*/
 USE tracker_DB;
 
-INSERT INTO roles (title, salary)
-VALUES ('Owner', NULL), ('Manager', 100000.00), ('Engineer I', 77400.00),  ('Engineer II', 83800.00), ('Engineer III', 92900.00), ('Technician I', 41000.00), ('Technician II', 47300.00), ('Graphic Desiner', 49600.00), ('Receptionist', 35000.00), ('Sales Rep', 25800.00), ('Maketing Rep', 45400.00), ('IT Specialist', 46500.00), ('Production Assembler', 31200.00), ('Logistics Specialist', 45200.00),('Intern', 0);
-
 INSERT INTO departments (name)
-VALUES ('Engineering'), ('Purchassing'), ('Production'), ('Marketing'), ('Quality Control'), ('Tech Support'), ('Sales'), ('Human Resources'), ('Owner');
+VALUES ('Engineering'), ('Purchassing'), ('Production'), ('Marketing'), ('Quality Control'), ('Tech Support'), ('Sales'), ('Human Resources'), ('Owner'), ('Management');
+
+INSERT INTO roles (title, dept_id, salary)
+VALUES ('Owner', 9, 0), ('Manager', 9, 100000.00), ('Engineer I', 1, 77400.00),  ('Engineer II', 1, 83800.00), ('Engineer III', 1, 92900.00), ('Technician I', 6, 41000.00), ('Technician II', 1, 47300.00), ('Graphic Desiner', 4, 49600.00), ('Receptionist', 8, 35000.00), ('Sales Rep', 7, 25800.00), ('Maketing Rep', 4, 45400.00), ('IT Specialist', 6,  46500.00), ('Production Assembler', 2, 31200.00), ('Logistics Specialist', 2, 45200.00), ('Intern', 8, 0);
 
 INSERT INTO managers (name, dept_id, role_id)
 VALUES ('Ernie', 1, 2), ('Jessica', 2, 2),  ('Carrie', 3, 2), ('Bart', 4, 2), ('Jared', 5, 2), ('Noah', 6, 2), ('Samantha', 7, 2), ('Elizabeth', 8, 2);
