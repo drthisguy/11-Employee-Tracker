@@ -1,10 +1,14 @@
         const UI = require('./lib/ui'),
+           SQL = require("./lib/sql"),
            Dept = require('./lib/depts'),
+           Role = require('./lib/roles'),
            Employ = require('./lib/employees'),
-
-  ui = new UI,
+  
+  sql = new SQL(),
+  emp = new Employ,
   dept = new Dept,
-  emp = new Employ;
+  role = new Role,
+  ui = new UI;
 
 (function start() {
 
@@ -22,7 +26,7 @@
           break;
 
         case "Job Titles":
-          roleManager(scope);
+          role.manager(scope);
           break;
 
         default:
