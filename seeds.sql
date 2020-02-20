@@ -1,7 +1,7 @@
 /*Seeds for MySQL tables*/
 USE tracker_DB;
 
-INSERT INTO departments (name)
+INSERT INTO departments (department)
 VALUES ('Engineering'), ('Purchassing'), ('Production'), ('Marketing'), ('Quality Control'), ('Tech Support'), ('Sales'), ('Human Resources'), ('Owner'), ('Management');
 
 INSERT INTO roles (title, dept_id, salary)
