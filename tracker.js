@@ -3,6 +3,7 @@
            Dept = require('./lib/depts'),
            Role = require('./lib/roles'),
            Employ = require('./lib/employees'),
+           colors = require("console-colors-2"),
   
   sql = new SQL(),
   emp = new Employ,
@@ -32,7 +33,7 @@
         default:
           // Quit program
           sql.end();
-          console.log("Have a great day!");
+          console.log(`${colors.fg.magenta}Have a great day!${colors.sp.reset}`);
           process.exit([0]);
       }
     })
