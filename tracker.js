@@ -33,7 +33,7 @@
         default:
           // Quit program
           sql.end();
-          console.log(`${colors.fg.magenta}Have a great day!${colors.sp.reset}`);
+          console.log(`${colors.fg.blue}Have a great day!${colors.sp.reset}`);
           process.exit([0]);
       }
     })
