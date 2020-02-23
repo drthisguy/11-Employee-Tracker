@@ -29,7 +29,11 @@ https://github.com/drthisguy/11-Employee-Tracker
 # Screen Grabs:
 https://user-images.githubusercontent.com/48693333/75101549-24e5d780-55ac-11ea-9834-df3bdd004c18.png
 
+![image](https://user-images.githubusercontent.com/48693333/75101549-24e5d780-55ac-11ea-9834-df3bdd004c18.png)
+
 https://user-images.githubusercontent.com/48693333/75101598-e270ca80-55ac-11ea-9af2-86dbed7b86ed.png
+
+![image](https://user-images.githubusercontent.com/48693333/75101598-e270ca80-55ac-11ea-9af2-86dbed7b86ed.png)
 
 # Sources, issues and contact:
 
