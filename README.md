@@ -5,6 +5,18 @@ CLI based content management system for HR departments.
 
 This is a full featured CLI content management system application. HR Express is ideal for managing human resources operations such as storing, adding, removing, updating, searching, budgeting, cross-referencing and more from company employees, departments, job titles, etc. The UI is naturally fluid and easy to manage with colored text. This application interfaces best with your SQL databases and is perfect for small business everywhere. A schema script for your MySQL workbench is included along with a seeds.sql to load for testing.
 
+# How To Use:
+Node installation required. install dependencies by typing "npm install".
+Run the included schema.sql file on MySQL server and set it up to accept the following connection: 
+
+host: 'localhost',
+port: 3306,
+user: "root",
+password:"YourRootPassword",
+database: "tracker_DB"
+
+Run the program with "npm start".
+
 # file manifest:
 
 app.js
@@ -29,7 +41,11 @@ https://github.com/drthisguy/11-Employee-Tracker
 # Screen Grabs:
 https://user-images.githubusercontent.com/48693333/75101549-24e5d780-55ac-11ea-9834-df3bdd004c18.png
 
+![image](https://user-images.githubusercontent.com/48693333/75101549-24e5d780-55ac-11ea-9834-df3bdd004c18.png)
+
 https://user-images.githubusercontent.com/48693333/75101598-e270ca80-55ac-11ea-9af2-86dbed7b86ed.png
+
+![image](https://user-images.githubusercontent.com/48693333/75101598-e270ca80-55ac-11ea-9af2-86dbed7b86ed.png)
 
 # Sources, issues and contact:
 
