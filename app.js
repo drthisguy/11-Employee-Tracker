@@ -16,8 +16,8 @@
   const scope = () => start();
 
   ui.start()
-    .then(({ catagory }) => {
-      switch (catagory) {
+    .then(({ category }) => {
+      switch (category) {
         case "Employees":
           emp.manager(scope);
           break;
