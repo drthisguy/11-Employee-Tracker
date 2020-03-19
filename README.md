@@ -38,6 +38,12 @@ README.md
 https://github.com/drthisguy/11-Employee-Tracker
 
 
+# Animated Action:
+
+![image](https://user-images.githubusercontent.com/48693333/77019253-87858580-6956-11ea-8fb0-6808663dde38.png)
+
+
+
 # Screen Grabs:
 https://user-images.githubusercontent.com/48693333/75101549-24e5d780-55ac-11ea-9834-df3bdd004c18.png
 
