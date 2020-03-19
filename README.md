@@ -40,7 +40,7 @@ https://github.com/drthisguy/11-Employee-Tracker
 
 # Animated Action:
 
-![image](https://user-images.githubusercontent.com/48693333/77019253-87858580-6956-11ea-8fb0-6808663dde38.png)
+![HR-Express-optimize](https://user-images.githubusercontent.com/48693333/77019460-f6fb7500-6956-11ea-93bb-7744ffd659a2.gif)
 
 
 
